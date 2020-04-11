@@ -50,5 +50,6 @@ The method also accepts two optional values `tolerance` and `distance`. These ar
 
 ![points on path](https://user-images.githubusercontent.com/833927/79054653-8ebd4d80-7bfb-11ea-8645-a5a0ed81cf84.png)
 
-
+## License
+[MIT License](https://github.com/pshihn/points-on-path/blob/master/LICENSE)
 
