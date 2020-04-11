@@ -53,7 +53,7 @@
       <input id="din" type="range" min="0.1" max="3" step="0.001" value="0.1">
       <span id="d"></span>
     </div>
-    <canvas id="c2" width="400" height="350"></canvas>
+    <canvas id="c2" width="450" height="350"></canvas>
   </section>
 
   <script type="module">
@@ -65,7 +65,7 @@
     const t2 = document.getElementById('t2');
     const d = document.getElementById('d');
 
-    const pathString = 'M 10 315 L 110 215 A 30 50 0 0 1 162.55 162.45 L 172.55 152.45 A 30 50 -45 0 1 215.1 109.9 L 315 10';
+    const pathString = 'm240,100c50,0,0,125,50,100s0,-125,50,-150s175,50,50,100s-175,50,-300,0s0,-125,50,-100s0,125,50,150s0,-100,50,-100';
     const p2d = new Path2D(pathString);
 
     const draw = (canvas, t, d) => {
