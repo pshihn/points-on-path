@@ -1,0 +1,33 @@
+{
+  "name": "points-on-path",
+  "version": "0.0.1",
+  "description": "Estimate points on a SVG path",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "rm -rf lib && tsc",
+    "lint": "tslint -p tsconfig.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pshihn/points-on-path.git"
+  },
+  "keywords": [
+    "SVG",
+    "graphics"
+  ],
+  "author": "Preet Shihn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pshihn/points-on-path/issues"
+  },
+  "homepage": "https://github.com/pshihn/points-on-path#readme",
+  "devDependencies": {
+    "tslint": "^6.1.1",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "path-data-parser": "0.0.2",
+    "points-on-curve": "0.0.1"
+  }
+}
