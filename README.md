@@ -28,7 +28,11 @@ PathPoints {
 }
 ```
 
-For example:
+Take this path for example:
+
+![points on path](https://user-images.githubusercontent.com/833927/79054782-ba8d0300-7bfc-11ea-8f16-ed36001c56c9.png)
+
+and estimate the points on the path
 
 ```javascript
 import { pointsOnPath } from 'points-on-path';
