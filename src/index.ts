@@ -1,44 +1,46 @@
-import { Point, pointsOnBezierCurves } from 'points-on-curve';
+import { Point, pointsOnBezierCurves, simplify } from 'points-on-curve';
 import { parsePath, absolutize, normalize } from 'path-data-parser';
 
 export { Point } from 'points-on-curve';
 
-interface PathPoints {
-  points: Point[];
-  continuous: boolean;
-}
-
-export function pointsOnPath(path: string, tolerance?: number, distance?: number): PathPoints {
+export function pointsOnPath(path: string, tolerance?: number, distance?: number): Point[][] {
   const segments = parsePath(path);
   const normalized = normalize(absolutize(segments));
-  const points: Point[] = [];
+
+  const sets: Point[][] = [];
+  let currentPoints: Point[] = [];
   let start: Point = [0, 0];
-  let moves = 0;
   let pendingCurve: Point[] = [];
 
   const appendPendingCurve = () => {
-    if (pendingCurve && pendingCurve.length >= 4) {
-      points.push(...pointsOnBezierCurves(pendingCurve, tolerance, distance));
+    if (pendingCurve.length >= 4) {
+      currentPoints.push(...pointsOnBezierCurves(pendingCurve, tolerance));
     }
     pendingCurve = [];
   };
 
-  for (const segment of normalized) {
-    const data = segment.data;
-    switch (segment.key) {
+  const appendPendingPoints = () => {
+    appendPendingCurve();
+    if (currentPoints.length) {
+      sets.push(currentPoints);
+      currentPoints = [];
+    }
+  };
+
+  for (const { key, data } of normalized) {
+    switch (key) {
       case 'M':
-        appendPendingCurve();
-        moves++;
+        appendPendingPoints();
         start = [data[0], data[1]];
-        points.push(start);
+        currentPoints.push(start);
         break;
       case 'L':
         appendPendingCurve();
-        points.push([data[0], data[1]]);
+        currentPoints.push([data[0], data[1]]);
         break;
       case 'C':
         if (!pendingCurve.length) {
-          const lastPoint = points.length ? points[points.length - 1] : start;
+          const lastPoint = currentPoints.length ? currentPoints[currentPoints.length - 1] : start;
           pendingCurve.push([lastPoint[0], lastPoint[1]]);
         }
         pendingCurve.push([data[0], data[1]]);
@@ -47,13 +49,22 @@ export function pointsOnPath(path: string, tolerance?: number, distance?: number
         break;
       case 'Z':
         appendPendingCurve();
-        points.push([start[0], start[1]]);
+        currentPoints.push([start[0], start[1]]);
         break;
     }
   }
-  appendPendingCurve();
-  return {
-    continuous: moves < 2,
-    points
-  };
+  appendPendingPoints();
+
+  if (!distance) {
+    return sets;
+  }
+
+  const out: Point[][] = [];
+  for (const set of sets) {
+    const simplifiedSet = simplify(set, distance);
+    if (simplifiedSet.length) {
+      out.push(simplifiedSet);
+    }
+  }
+  return out;
 }

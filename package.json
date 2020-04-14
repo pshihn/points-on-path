@@ -1,6 +1,6 @@
 {
   "name": "points-on-path",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Estimate points on a SVG path",
   "main": "lib/index.js",
   "scripts": {
@@ -28,6 +28,6 @@
   },
   "dependencies": {
     "path-data-parser": "0.1.0",
-    "points-on-curve": "0.1.1"
+    "points-on-curve": "0.2.0"
   }
 }
