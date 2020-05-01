@@ -1,8 +1,10 @@
 {
   "name": "points-on-path",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Estimate points on a SVG path",
   "main": "lib/index.js",
+  "module": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "build": "rm -rf lib && tsc",
     "lint": "tslint -p tsconfig.json",
